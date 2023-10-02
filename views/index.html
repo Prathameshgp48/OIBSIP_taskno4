@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Login and Registration</title>
+  </head>
+  <body>
+    <div class="wrapper">
+    <div class="container">
+      <div class="login">
+        <h1>Login</h1>
+        <form action="/login" method="POST">
+          <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <button class="extra">Register</button>
+        <div id="error-message" class="message" style="color: red"></div>
+      </div>
+
+      <div class="register display">
+        <h1>Register</h1>
+        <form action="/register" method="POST">
+          <div>
+            <label for="newUsername">Username</label>
+            <input type="text" id="newUsername" name="username" required />
+          </div>
+          <div>
+            <label for="newPassword">Password</label>
+            <input type="password" id="newPassword" name="password" required />
+          </div>
+          <button type="submit">Register</button>
+        </form>
+      </div>
+    </div>
+    </div>
+
+    <script>
+      const reg = document.querySelector(".extra");
+      reg.addEventListener("click", () => {
+        document.querySelector(".register").classList.toggle("display");
+        document.querySelector(".login").classList.toggle("display");
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const errorMessageDiv = document.getElementById("error-message");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorMessage = urlParams.get("error");
+
+        if (errorMessage === "user-not-found") {
+          errorMessageDiv.classList.toggle("message");
+          errorMessageDiv.textContent =
+            "User not found. Please register first.";
+        } else if (errorMessage === "invalid-password-or-username") {
+          errorMessageDiv.classList.toggle("message");
+          errorMessageDiv.textContent =
+            "Invalid password or Username. Please try again.";
+        } else if (errorMessage === "unauthenticated") {
+          errorMessageDiv.classList.toggle("message");
+          errorMessageDiv.textContent =
+            "You are not authenticated. Please log in.";
+        }
+      });
+    </script>
+  </body>
+</html>
